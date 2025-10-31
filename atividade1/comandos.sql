@@ -10,10 +10,10 @@ CREATE TABLE Joga (
   time2 VARCHAR(30),
   classico NUMBER(1) CHECK (classico in (0,1)),
   CONSTRAINT pk_joga PRIMARY KEY (time1, time2),
-  CONSTRAINT fk_time1 FOREIGN KEY (time1)
+  CONSTRAINT fk_joga_time1 FOREIGN KEY (time1)
     REFERENCES Time(nome)
     ON DELETE CASCADE,
-  CONSTRAINT fk_time2 FOREIGN KEY (time2)
+  CONSTRAINT fk_joga_time2 FOREIGN KEY (time2)
     REFERENCES Time(nome)
     ON DELETE CASCADE,
   CONSTRAINT ck_joga CHECK (time1 <> time2)
@@ -26,12 +26,12 @@ CREATE TABLE Partida (
   placar VARCHAR(7) DEFAULT '0x0',
   local VARCHAR(30),
   CONSTRAINT pk_partida PRIMARY KEY (time1, time2, data_partida),
-  CONSTRAINT fk_time1 FOREIGN KEY (time1)
+  CONSTRAINT fk_partida_time1 FOREIGN KEY (time1)
     REFERENCES Time(nome)
     ON DELETE CASCADE,
-  CONSTRAINT fk_time2 FOREIGN KEY (time2)
+  CONSTRAINT fk_partida_time2 FOREIGN KEY (time2)
     REFERENCES Time(nome)
     ON DELETE CASCADE,
-  CONSTRAINT ck_joga CHECK (time1 <> time2),
-  CONSTRAINT ck_placar CHECK (REGEXP_LIKE(placar, '^[0-9]{1,2,3}x[0-9]{1,2,3}$'))
+  CONSTRAINT ck_partida CHECK (time1 <> time2),
+  CONSTRAINT ck_partida_placar CHECK (REGEXP_LIKE(placar, '^[0-9]{1,2,3}x[0-9]{1,2,3}$'))
 );
