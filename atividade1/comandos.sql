@@ -2,7 +2,7 @@ CREATE TABLE Time (
   nome VARCHAR(30) PRIMARY KEY,
   estado VARCHAR(2),
   tipo VARCHAR(20) CHECK (tipo in ('AMADOR','PROFISSIONAL')),
-  saldo_gols NUMBER(5)
+  saldo_gols NUMBER(5) NOT NULL
 ); -- ok
 
 CREATE TABLE Joga (
@@ -26,11 +26,8 @@ CREATE TABLE Partida (
   placar VARCHAR(7) DEFAULT '0x0',
   local VARCHAR(30),
   CONSTRAINT pk_partida PRIMARY KEY (time1, time2, data_partida),
-  CONSTRAINT fk_partida_time1 FOREIGN KEY (time1)
-    REFERENCES Time(nome)
-    ON DELETE CASCADE,
-  CONSTRAINT fk_partida_time2 FOREIGN KEY (time2)
-    REFERENCES Time(nome)
+  CONSTRAINT fk_partida_time FOREIGN KEY (time1, time2)
+    REFERENCES Joga(time1, time2)
     ON DELETE CASCADE,
   CONSTRAINT ck_partida CHECK (time1 <> time2),
   CONSTRAINT ck_partida_placar CHECK (REGEXP_LIKE(placar, '^[0-9]{1,2}x[0-9]{1,2}$'))
@@ -56,7 +53,7 @@ CREATE TABLE Posicao_jogador (
   CONSTRAINT fk_posicao_jogador_jogador FOREIGN KEY (jogador)
     REFERENCES jogador(cpf)
     ON DELETE CASCADE
-) -- ok
+); -- ok
 
 CREATE TABLE Diretor (
   time VARCHAR(30),
@@ -65,4 +62,15 @@ CREATE TABLE Diretor (
   CONSTRAINT fk_diretor_time FOREIGN KEY (time)
     REFERENCES time(nome)
     ON DELETE CASCADE
-) -- ok
+); -- ok
+
+  
+  CREATE TABLE Uniforme (
+    time VARCHAR(30),
+    tipo VARCHAR(7) CHECK (tipo in ('TITULAR', 'TITULAR')),
+    cor_principal VARCHAR(20),
+    CONSTRAINT pk_uniforme PRIMARY KEY (time, tipo),
+    CONSTRAINT fk_uniforme_time FOREIGN KEY (time)
+      REFERENCES Time(nome)
+      ON DELETE CASCADE
+  ); -- ok
