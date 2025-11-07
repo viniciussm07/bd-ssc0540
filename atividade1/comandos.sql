@@ -42,8 +42,27 @@ CREATE TABLE Jogador (
   nome VARCHAR(50),
   data_nasc DATE,
   naturalidade VARCHAR(30),
-  time VARCHAR(30),
+  time VARCHAR(30) NOT NULL,
   UNIQUE (rg, nome),
   CONSTRAINT fk_jogador_time FOREIGN KEY (time) REFERENCES Time(nome),
   CONSTRAINT ck_jogador_cpf CHECK (LENGTH(cpf) = 11)
 ); -- ok
+
+
+CREATE TABLE Posicao_jogador (
+  jogador VARCHAR(11),
+  posicao VARCHAR(20),
+  CONSTRAINT pk_posicao_jogador PRIMARY KEY (jogador, posicao),
+  CONSTRAINT fk_posicao_jogador_jogador FOREIGN KEY (jogador)
+    REFERENCES jogador(cpf)
+    ON DELETE CASCADE
+) -- ok
+
+CREATE TABLE Diretor (
+  time VARCHAR(30),
+  nome VARCHAR(50),
+  CONSTRAINT pk_diretor PRIMARY KEY (time, nome),
+  CONSTRAINT fk_diretor_time FOREIGN KEY (time)
+    REFERENCES time(nome)
+    ON DELETE CASCADE
+) -- ok
