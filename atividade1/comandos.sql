@@ -1,7 +1,7 @@
 CREATE TABLE Time (
   nome VARCHAR(30) PRIMARY KEY,
-  estado VARCHAR(2),
-  tipo VARCHAR(20) CHECK (tipo in ('AMADOR','PROFISSIONAL')),
+  estado VARCHAR(2) NOT NULL,
+  tipo VARCHAR(20) CHECK (tipo in ('AMADOR','PROFISSIONAL')) NOT NULL,
   saldo_gols NUMBER(5) NOT NULL
 ); -- ok
 
@@ -65,7 +65,7 @@ CREATE TABLE Diretor (
 ); -- ok
 
   
-  CREATE TABLE Uniforme (
+CREATE TABLE Uniforme (
     time VARCHAR(30),
     tipo VARCHAR(7) CHECK (tipo in ('TITULAR', 'TITULAR')),
     cor_principal VARCHAR(20),
@@ -74,3 +74,5 @@ CREATE TABLE Diretor (
       REFERENCES Time(nome)
       ON DELETE CASCADE
   ); -- ok
+
+INSERT INTO Time 
