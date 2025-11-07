@@ -35,8 +35,8 @@ CREATE TABLE Partida (
 
 CREATE TABLE Jogador (
   cpf VARCHAR(11) PRIMARY KEY,
-  rg VARCHAR(9),
-  nome VARCHAR(50),
+  rg VARCHAR(9) NOT NULL,
+  nome VARCHAR(50) NOT NULL,
   data_nasc DATE,
   naturalidade VARCHAR(30),
   time VARCHAR(30) NOT NULL,
@@ -74,5 +74,3 @@ CREATE TABLE Uniforme (
       REFERENCES Time(nome)
       ON DELETE CASCADE
   ); -- ok
-
-INSERT INTO Time 
