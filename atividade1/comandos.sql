@@ -33,5 +33,17 @@ CREATE TABLE Partida (
     REFERENCES Time(nome)
     ON DELETE CASCADE,
   CONSTRAINT ck_partida CHECK (time1 <> time2),
-  CONSTRAINT ck_partida_placar CHECK (REGEXP_LIKE(placar, '^[0-9]{1,2,3}x[0-9]{1,2,3}$'))
-);
+  CONSTRAINT ck_partida_placar CHECK (REGEXP_LIKE(placar, '^[0-9]{1,2}x[0-9]{1,2}$'))
+); -- ok
+
+CREATE TABLE Jogador (
+  cpf VARCHAR(11) PRIMARY KEY,
+  rg VARCHAR(9),
+  nome VARCHAR(50),
+  data_nasc DATE,
+  naturalidade VARCHAR(30),
+  time VARCHAR(30),
+  UNIQUE (rg, nome),
+  CONSTRAINT fk_jogador_time FOREIGN KEY (time) REFERENCES Time(nome),
+  CONSTRAINT ck_jogador_cpf CHECK (LENGTH(cpf) = 11)
+); -- ok
